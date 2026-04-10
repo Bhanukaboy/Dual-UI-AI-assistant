@@ -1,0 +1,249 @@
+/* --- THE CORE VARIABLES --- */
+:root {
+    /* Stable Side: Apple-Style Light Minimalist */
+    --bg: #f8fafc; 
+    --card: #ffffff;
+    --text: #334155;
+    --accent: #0084ff; 
+    --user-bubble: #0084ff;
+    --null-bubble: #f1f5f9;
+    --input-area-bg: #ffffff;
+    --input-border: #cbd5e1;
+    
+    /* Void Side: Pure Black & Electric Purple */
+    --void-bg: #020617;
+    --void-card: #000000;
+    --void-accent: #a855f7;
+}
+
+/* --- BASE SETUP --- */
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    /* Transition: Slower for the cooldown feel */
+    transition: background-color 1.8s cubic-bezier(0.4, 0, 0.2, 1), filter 0.5s ease;
+}
+
+/* --- THE MAIN TERMINAL --- */
+#chat-container {
+    width: 95%;
+    max-width: 850px;
+    height: 85vh;
+    background: var(--card);
+    border-radius: 24px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #e2e8f0;
+    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- HEADER --- */
+#core-caption {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--card);
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: #94a3b8;
+    text-transform: uppercase;
+    transition: all 0.8s ease;
+}
+
+#logic-orb {
+    width: 14px;
+    height: 14px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin-right: 15px;
+    box-shadow: 0 0 10px rgba(0, 132, 255, 0.3);
+    transition: all 1s ease;
+}
+
+/* --- CHAT AREA --- */
+#chat-display {
+    padding: 30px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Custom Scrollbar - Adaptive */
+#chat-display::-webkit-scrollbar { width: 6px; }
+#chat-display::-webkit-scrollbar-track { background: transparent; }
+#chat-display::-webkit-scrollbar-thumb { 
+    background: #cbd5e1; 
+    border-radius: 10px; 
+}
+
+/* --- MESSAGE STYLES --- */
+.message {
+    display: flex;
+    flex-direction: column;
+    max-width: 85%;
+}
+
+.user-msg { align-self: flex-end; align-items: flex-end; }
+.null-msg { align-self: flex-start; align-items: flex-start; }
+
+.message-label {
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+    opacity: 0; /* Hidden in Stable */
+    transform: translateY(5px);
+    transition: all 0.8s ease;
+}
+
+.message-content {
+    padding: 14px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    line-height: 1.6;
+    transition: all 0.6s ease;
+}
+
+/* Light Bubble Colors */
+.user-msg .message-content {
+    background: var(--user-bubble);
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+.null-msg .message-content {
+    background: var(--null-bubble);
+    color: var(--text);
+    border-bottom-left-radius: 4px;
+    border: 1px solid #e2e8f0;
+}
+
+/* --- INPUT SECTION --- */
+#input-area {
+    padding: 25px;
+    background: #f8fafc;
+    display: flex;
+    gap: 12px;
+    border-top: 1px solid #e2e8f0;
+    transition: all 0.8s ease;
+}
+
+input {
+    flex: 1;
+    padding: 14px 22px;
+    background: var(--input-area-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 30px;
+    color: #1e293b;
+    outline: none;
+    transition: all 0.3s;
+}
+
+button {
+    padding: 0 25px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+/* --- VOID MODE OVERRIDES --- */
+.void-active { background-color: var(--void-bg); }
+
+.void-active #chat-container {
+    background: var(--void-card);
+    border: 1px solid var(--void-accent);
+    box-shadow: 0 0 50px rgba(168, 85, 247, 0.2);
+}
+
+.void-active #core-caption {
+    background: #000;
+    color: var(--void-accent);
+    border-bottom: 1px solid var(--void-accent);
+    text-shadow: 0 0 10px var(--void-accent);
+}
+
+.void-active #logic-orb {
+    background: var(--void-accent);
+    box-shadow: 0 0 20px var(--void-accent);
+    border-radius: 20%;
+    transform: rotate(45deg);
+}
+
+.void-active #chat-display::-webkit-scrollbar-thumb { 
+    background: var(--void-accent); 
+    box-shadow: 0 0 10px var(--void-accent);
+}
+
+.void-active .message-label { opacity: 1; transform: translateY(0); }
+.void-active .user-msg .message-label { color: var(--accent); }
+.void-active .null-msg .message-label { color: var(--void-accent); }
+
+.void-active .user-msg .message-content {
+    background: rgba(0, 132, 255, 0.1);
+    border: 1px solid var(--accent);
+    color: white;
+}
+
+.void-active .null-msg .message-content {
+    background: rgba(168, 85, 247, 0.05);
+    border: 1px solid var(--void-accent);
+    color: #e2e8f0;
+    animation: text-flicker 2s infinite;
+}
+
+.void-active #input-area {
+    background: #000000;
+    border-top: 1px solid var(--void-accent);
+}
+
+.void-active input { 
+    background: #0a0a0a; 
+    color: white; 
+    border-color: #334155; 
+}
+
+.void-active button { 
+    background: var(--void-accent); 
+    box-shadow: 0 0 15px var(--void-accent);
+}
+
+/* --- ANIMATIONS & SHATTER --- */
+@keyframes text-flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.85; }
+}
+
+#void-cracks {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: var(--void-accent);
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0;
+    clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
+    transition: opacity 0.4s, clip-path 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.shatter-active #void-cracks {
+    opacity: 0.5;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 30% 20%, 70% 30%, 50% 80%, 20% 50%, 0% 100%, 100% 100%, 100% 0%, 0% 0%);
+}
